@@ -2,8 +2,10 @@ CC = g++
 FLAGS = -g -std=c++11
 OBJS = MaxHeap.o
 
-$(OBJS): MaxHeap.cpp
-	$(CC) -c $(FLAGS) MaxHeap.cpp
+test: TestHeap.cpp
+	$(CC) $(FLAGS) $^ -o $@
+$(OBJS): MaxHeap.h
+	$(CC) -c $(FLAGS) MaxHeap.h -o $@
 
 clean:
-	rm *.o
+	rm *.o test
