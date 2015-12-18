@@ -1,5 +1,5 @@
 #include <iostream>
-#include <multiset>
+#include <unordered_map>
 
 class Solution {
  public:
@@ -8,21 +8,24 @@ class Solution {
       return false;
     }
 
-    std::multiset<char> set_s;
-    std::multiset<char> set_t;
+    std::unordered_map<char, int> map_s;
+    std::pair<std::unordered_map<char, int>::iterator, bool> p;
+    std::pair<char, int> element;
     
     for (int i = 0; i < s.length(); i++) {
-      set_s.insert(s[i]);
+      element.first = s[i];
+      element.second = 1;
+      p = map_s.insert(element);
+      if (! p.second) {
+        map_s[s[i]] += 1;
+      }
     }
 
     for (int i = 0; i < t.length(); i++) {
-      set_t.insert(t[i]);
+      if (map_s[t[i]] <= 0) return false;
+      map_s[t[i]]--;
     }
-
-    if (set_s == set_t) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+    
+    return true;
+}
 };
